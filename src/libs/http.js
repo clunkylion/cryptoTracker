@@ -8,20 +8,20 @@ class Http {
       let json = await req.json();
       return json;
     } catch (error) {
-      console.error('Http get method error', error);
+      console.error("Http get method error", error);
       throw Error(error);
     }
   };
   post = async (url, body) => {
     try {
       let req = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         body,
       });
       let json = await req.json();
       return json;
     } catch (error) {
-      console.error('Http post error', error);
+      console.error("Http post error", error);
       throw Error(error);
     }
   };

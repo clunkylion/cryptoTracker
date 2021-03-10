@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {
   View,
   Text,
@@ -6,26 +6,40 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-} from 'react-native';
-import Colors from '../../resources/colors';
-import Http from '../../libs/http';
-import CoinsItem from './CoinsItem';
-class CoinDetailsScreen extends Component {
+} from "react-native";
+import Colors from "../../resources/colors";
+import Http from "../../libs/http";
+import CoinsItem from "./CoinsItem";
+import CoinsSearch from "./CoinsSearch";
+class CoinScreen extends Component {
   state = {
     coins: [],
+    allCoins: [],
     loading: false,
   };
-  componentDidMount = async () => {
-    this.state.loading = true;
+  componentDidMount = () => {
+    this.getCoins();
+  };
+  getCoins = async () => {
+    this.setState({loading: true});
     const res = await Http.instance.get(
-      'https://api.coinlore.net/api/tickers/',
+      "https://api.coinlore.net/api/tickers/",
     );
-    this.setState({coins: res.data, loading: false});
+    this.setState({coins: res.data, allCoins: res.data, loading: false});
   };
 
   handlePress = (coin) => {
-    console.log('go to details', this.props);
-    this.props.navigation.navigate('CoinDetails', {coin});
+    this.props.navigation.navigate("CoinDetails", {coin});
+  };
+  handleSearch = (query) => {
+    const {allCoins} = this.state;
+    const coinsFiltered = allCoins.filter((coin) => {
+      return (
+        coin.name.toLowerCase().includes(query.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(query.toLowerCase())
+      );
+    });
+    this.setState({coins: coinsFiltered});
   };
 
   render() {
@@ -33,6 +47,7 @@ class CoinDetailsScreen extends Component {
     const {loading} = this.state;
     return (
       <View style={styles.container}>
+        <CoinsSearch onChange={this.handleSearch} />
         {loading ? (
           <ActivityIndicator styles={styles.loader} color="#fff" size="large" />
         ) : null}
@@ -52,21 +67,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.charade,
   },
   title: {
-    backgroundColor: 'white',
-    textAlign: 'center',
+    backgroundColor: "white",
+    textAlign: "center",
   },
   btn: {
     padding: 8,
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     borderRadius: 5,
     margin: 16,
   },
   btnText: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
   },
   loader: {
     marginTop: 60,
   },
 });
-export default CoinDetailsScreen;
+export default CoinScreen;

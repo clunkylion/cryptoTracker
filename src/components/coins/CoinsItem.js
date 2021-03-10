@@ -1,12 +1,12 @@
-import React from 'react';
-import {View, Text, Image, StyleSheet, Platform, Pressable} from 'react-native';
-import Colors from '../../resources/colors';
+import React from "react";
+import {View, Text, Image, StyleSheet, Platform, Pressable} from "react-native";
+import Colors from "../../resources/colors";
 const CoinsItem = ({item, onPress}) => {
   const getImgArrow = () => {
     if (item.percent_change_1h > 0) {
-      return require('../../assets/arrow_up.png');
+      return require("../../assets/arrow_up.png");
     } else {
-      return require('../../assets/arrow_down.png');
+      return require("../../assets/arrow_down.png");
     }
   };
   return (
@@ -26,34 +26,35 @@ const CoinsItem = ({item, onPress}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 16,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     borderBottomColor: Colors.zircon,
     borderBottomWidth: 1,
-    marginLeft: Platform.OS == 'ios' ? 10 : 0,
+    paddingLeft: Platform.OS == "ios" ? 0 : 16,
+    marginLeft: Platform.OS == "ios" ? 16 : 0,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   symbolText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginRight: 12,
   },
   nameText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 14,
     marginRight: 16,
   },
   percentText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 12,
     marginRight: 8,
   },
   priceText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 14,
   },
   imgIcon: {
